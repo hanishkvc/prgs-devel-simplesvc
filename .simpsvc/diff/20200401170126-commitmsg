@@ -1,0 +1,10 @@
+cat dont print newline, pass cmdline arg to do_diff
+
+Now one can pass either --LC-CA or --LC-WD or --CA-WD
+
+TODO: have to fix --CA-WD, bcas the current logic, shows
+all the content of full file, for the files missing in
+cacheDir. Note that cacheDir will only have some files
+so one has to diff for only the files in cacheDir and
+not for all files
+

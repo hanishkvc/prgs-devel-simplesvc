@@ -1,0 +1,9 @@
+Attempt at sorting diffDir files for log printing
+
+This is too simple a logic, which doesnt work fully.
+It pushes commitmsg file to top of list, but files
+which were commited as part of the same commit,
+but which follow the commitmsg in default sort
+order will get sorted by this new logic in the
+wrong order.
+

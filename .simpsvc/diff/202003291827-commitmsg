@@ -1,0 +1,10 @@
+Moved a specific file diff logic into _do_diff
+
+do_diff inturn now calls _do_diff.
+
+TODO:
+
+The reason why this logic has been restructured is so that
+later I can diff a specific file rather than all files
+which are being tracked.
+

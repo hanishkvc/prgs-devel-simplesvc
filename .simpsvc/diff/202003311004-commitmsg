@@ -1,0 +1,3 @@
+Now hkvc-run install also calls check_install before and after the install
+
+

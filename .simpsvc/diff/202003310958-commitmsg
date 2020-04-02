@@ -1,0 +1,10 @@
+Commitmsg for Init, Document the functions.
+
+Now init command also generates a commitmsg file in diffDirs
+to help users track the event (which is the originator of the
+that ssvc repository). To help with same the helper _commit_op
+function moved to begining.
+
+Also adding documentation for all the functions. Have done for
+most, few remaining.
+

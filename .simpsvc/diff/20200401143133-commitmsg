@@ -1,0 +1,4 @@
+New add-commit logic, do_diff and its helper updated
+
+
+However callers of do_diff have not yet been updated.

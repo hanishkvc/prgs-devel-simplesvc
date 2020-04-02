@@ -1,0 +1,2 @@
+Fix some oversights in do_diff, get list of files in cacheDir
+

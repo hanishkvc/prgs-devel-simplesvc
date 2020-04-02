@@ -1,0 +1,16 @@
+ssvc_fileexists_list, intelligent diff btw cacheDir and working dir
+
+Added a ssvc_fileexists_list function, which uses the python filter
+function to implement its logic. This is done to make it bit more
+efficient. This function checks if the given list of files exist
+in the specified base dir, and if it exists it is returned as part
+of the list of files returned.
+
+Inturn the above function is used to filter the file list in do_diff,
+if the old files directory is specified as cacheDir. This ensures
+that do_diff generates diffs only for the files which have been added
+to the cacheDir (using add command), when cacheDir is the old-files
+folder.
+
+_commit_fileexists_list updated to use the new ssvc_fileexists_list
+

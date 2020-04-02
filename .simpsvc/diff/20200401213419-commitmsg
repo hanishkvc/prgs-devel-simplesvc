@@ -1,0 +1,17 @@
+Improve do_diff logic
+
+Processing of arguments related to diff command moved into a new function
+called diff_args.
+
+It takes care of raw arguments like --CA-WD, --LC-CA, --LC-WD, as well as
+user friendly arguments like --cached, --commit.
+
+The default mode if no argument passed along with diff command is that of
+--CA-WD i.e diff between the cached Dir and working Dir. Bcas the changes
+already in cacheDir would have been previously cross checked wrt the last
+commit version, when the file was added to cacheDir. So one is potentially
+mainly interested in cross checking variations between what was previously
+cached and the changed done beyond it in the working directory.
+
+The program usage message has been updated wrt the diff command arguments
+

@@ -1,0 +1,11 @@
+Added log logic
+
+It prints the contents of all the commit msgs till date.
+
+It prints the commit messages from latest to oldest.
+
+By default it just cats the commit msgs. However one
+can set the option bLess argument to True, so that it
+uses less to print the contents, so that people can go
+throu the commit messages one at a time.
+

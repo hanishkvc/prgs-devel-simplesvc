@@ -1,0 +1,11 @@
+Sort diffDir filelist based on timestamp
+
+The sort_diffDir has been updated to use timestamp prefix
+in the filename to decide whether it has seen all files 
+belonging to a given commit and inturn sort them such that 
+commitmsg file is first and then the remaining files of 
+that commit follow it.
+
+This fixes the issue with the previous simpler sort logic.
+
+TODO: Have to implement the dprint print logic

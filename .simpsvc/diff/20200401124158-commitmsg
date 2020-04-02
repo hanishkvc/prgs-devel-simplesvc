@@ -1,0 +1,30 @@
+New Add logic, so as to commit only specified files - P1
+
+Added a cacheDir, which will contain files which are added
+for the next commit.
+
+Init command updated to create the cacheDir.
+
+ssvccopy_mkdir and ssvccopy_cp changed to ssvc_mkdir & ssvc_cp.
+Previously they always assumed copyDir as the destination. Now
+they take a argument which tells which is the destination.
+
+do_add updated to only copy specified files into cacheDir, in
+addition to adding it to the tracked file list. It will no
+longer try to commit the file. Instead one is required to
+explicitly call commit command to achieve the previous behavior.
+
+This also means that one is no longer required to generate a
+commit message for the ADD operation.
+
+TODO: By modifying do_commit to work with either files in 
+working directory or cache directory, one can either commit
+all changed files or only those changed files, which the user
+has asked to be commited by using add after the last commit.
+
+Thus one can control what and tracked files are commited during
+any given commit operation.
+
+TODO: May need to modify ssvc_cp further to take a BaseSrcPath
+also in addition to the current BaseDestPath. Also may have to
+add a recursive ssvc_removedir logic.

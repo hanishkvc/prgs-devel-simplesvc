@@ -1,0 +1,18 @@
+Do_Diff If no files in cacheDir, then switch to testing against copyDir
+
+do_diff by default, if no argument is given, will look at checking for
+any changes between cached/staged version of the tracked files and the
+same in the working directory.
+
+However if there are no files already staged for commit, then switch
+to testing for changes if any between the last commit and the working
+directory.
+
+TODO: Currently if there are no files in cacheDir, only then it will
+fallback to checksing wrt copyDir. However I have to think, I may
+have to do a more intelligent logic, where in the default mode, I
+check working directory against cacheDir for files already staged in
+cacheDir and against copyDir for files which were previously not 
+staged in cacheDir.
+
+

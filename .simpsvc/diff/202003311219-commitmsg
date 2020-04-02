@@ -1,0 +1,8 @@
+peek_ingroup, document remaining functions
+
+Renamed peek_nextarg to peek_ingroup to reflect the true
+functionality of the logic.
+
+Added documentation for the remaining functions.
+
+

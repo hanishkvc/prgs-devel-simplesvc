@@ -1,0 +1,13 @@
+Optionally print associated diffs as part of log
+
+Added --patch optional argument to log command. If one specifies
+this argument, then along with printing the commit messages, it
+also prints the associated diffs/... of each commit.
+
+TODO: Currently the associated diffs/... of each commit is printed
+first, before printing the corresponding commit message. Will have
+to change the logic later OR else rename the files in diffDir such
+that there is a sorting numeral after the timestamp prefix.
+
+i.e for example TS-00-file_diff and TS-99-commit_msg
+

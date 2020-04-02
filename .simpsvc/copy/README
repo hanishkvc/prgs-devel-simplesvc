@@ -1,0 +1,72 @@
+======================================
+hkvc simple source version control 
+======================================
+v20200401IST0938, HanishKVC
+
+Intro
+=======
+
+Allows one to track changes to a set of files in a simple way,
+which doesnt require any special filesystem support, other than
+hidden directory for now.
+
+Useful for example, when storing or managing files on a plan 9
+filesystem as used by chrome os (and inturn chromebooks) for the
+shared folders between chrome os and its virtual containerised
+linux instances.
+
+It doesnt track meta data like owner info or date or permission
+changes etc.
+
+It provides a basic set of operations like
+
+init
+add
+diff
+commit
+log
+
+editcmsg
+
+
+For Future
+============
+
+TODOs
+----------
+
+TODO01: do_diff fallback to checking working dir file against
+copyDir version of the file, in case cacheDir doesnt have the
+corresponding file (but has other files in it, due to which 
+autofall back to copyDir at the global level wont trigger).
+
+TODO02: Implement commit -a, that is bring back the old
+behavior for the cases, where one wants to commit all the
+files which have changed in the working dir, without having
+to first go thro the staging area in cacheDir, by calling
+add for each file individually. Useful if too many files
+have been changed.
+
+TODO03: diff a specific file
+
+TODO4: Remove the press key prompt when auto falling back
+to copyDir based diff check, when cacheDir is empty.
+
+
+Done
+--------
+
+Done01: Commit only select files
+Make add copy to a temp cache dir within ssvc repository.
+Inturn commit only commits changes which are there between
+the temp cache dir and previously commited files.
+
+This also ensures that the same logic can apply irrespective
+of whether one is adding a file for the 1st time, or adding
+it later after some changes have been made. Currently add
+does commit related operations, which can be avoided with
+this above logic.
+
+This also gives more freedom to user to decide when to commit
+what, rather than forcing everything to be commited at the
+same time.

@@ -1,0 +1,19 @@
+_commit_op helper function
+
+Certain ops require to be tracked by storing info about
+them in the diffDir of the ssvc repository, as a commit
+message file.
+
+Previously a basic logic was added to achieve the same
+directly in the do_add logic. Now it has been moved into
+a generic logic called _commit_op.
+
+It takes the name of the operation that requries to be
+tracked and also the message to write to the commit msg
+file.
+
+NOTE:CHANGENOTICE: Previous commit message files in
+diffDir, only had OP in the middle of their name. Now
+instead they have OP_<THEOPERATION> in the middle of
+their name.
+

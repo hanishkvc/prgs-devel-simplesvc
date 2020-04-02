@@ -1,0 +1,16 @@
+usage info, peek_nextarg
+
+Added more informative usage info, if nothing is specified
+to ssvc when called.
+
+Added a peek_nextarg logic, which checks if there is a arg
+beyond the current arg, as requested to it, and inturn 
+returns that argument. If such a arg doesnt exist, then it
+returns None.
+
+In turn use this peek logic when checking for arguments
+to commands in process_args. Currently used for log command.
+
+Without this, the previous code would have raised 
+a exception, when trying the log command.
+

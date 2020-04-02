@@ -1,0 +1,23 @@
+SPECIAL OP, MANUAL RENAME OF the main File
+
+MV hkvc-simple-cvs.py
+TO hkvc-simple-svc.py
+
+This involved:
+
+move/rename the file in the working folder
+rename the file entry in the srcs file.
+rename the file in the copy folder.
+create this special op commit message.
+
+Obviously there is no automatic mapping of this file across
+this manual move operation, by the logic.
+
+However to help with future auto mapping or intelligent
+linking of files across their rename / mv operation, I have
+created that MV and TO entries at the top, as two independent
+lines, so that if the filename has space (in future, haven't
+tested now, so no idea, I have to think if I can have such
+files now, less likely as I am not protecting the file names
+within string delimiters, if I remember correctly).
+

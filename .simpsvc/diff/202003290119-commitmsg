@@ -1,0 +1,9 @@
+Autocommit a message for file add operation
+
+Now when ever any file is added into the simple svc repository,
+a automatic commit message is parallely created to indicate
+the same.
+
+NOTE: SVC stands for Source Version Control, i.e my this
+logic. I will be renaming things to match this shortly.
+

@@ -1,0 +1,8 @@
+Cleaned up the log related print logic
+
+For commit messages it adds a boiler plate, which
+identifies it has a log (commit) message.
+
+For diff | patch | ... content, it adds a boiler
+plate, which identifies it has a diff message.
+

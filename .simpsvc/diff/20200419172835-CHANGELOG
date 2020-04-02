@@ -1,0 +1,351 @@
+--- .simpsvc/copy/CHANGELOG	2020-03-29 23:34:42.000000000 +0530
++++ .simpsvc/cache/CHANGELOG	2020-04-19 17:27:33.738746301 +0530
+@@ -1,5 +1,348 @@
+ 
+ 
++INFO:log: #### 20200401214837-commitmsg #### 
++
++Do_Diff If no files in cacheDir, then switch to testing against copyDir
++
++do_diff by default, if no argument is given, will look at checking for
++any changes between cached/staged version of the tracked files and the
++same in the working directory.
++
++However if there are no files already staged for commit, then switch
++to testing for changes if any between the last commit and the working
++directory.
++
++TODO: Currently if there are no files in cacheDir, only then it will
++fallback to checksing wrt copyDir. However I have to think, I may
++have to do a more intelligent logic, where in the default mode, I
++check working directory against cacheDir for files already staged in
++cacheDir and against copyDir for files which were previously not 
++staged in cacheDir.
++
++
++
++
++INFO:log: #### 20200401213419-commitmsg #### 
++
++Improve do_diff logic
++
++Processing of arguments related to diff command moved into a new function
++called diff_args.
++
++It takes care of raw arguments like --CA-WD, --LC-CA, --LC-WD, as well as
++user friendly arguments like --cached, --commit.
++
++The default mode if no argument passed along with diff command is that of
++--CA-WD i.e diff between the cached Dir and working Dir. Bcas the changes
++already in cacheDir would have been previously cross checked wrt the last
++commit version, when the file was added to cacheDir. So one is potentially
++mainly interested in cross checking variations between what was previously
++cached and the changed done beyond it in the working directory.
++
++The program usage message has been updated wrt the diff command arguments
++
++
++
++INFO:log: #### 20200401210317-commitmsg #### 
++
++ssvc_fileexists_list, intelligent diff btw cacheDir and working dir
++
++Added a ssvc_fileexists_list function, which uses the python filter
++function to implement its logic. This is done to make it bit more
++efficient. This function checks if the given list of files exist
++in the specified base dir, and if it exists it is returned as part
++of the list of files returned.
++
++Inturn the above function is used to filter the file list in do_diff,
++if the old files directory is specified as cacheDir. This ensures
++that do_diff generates diffs only for the files which have been added
++to the cacheDir (using add command), when cacheDir is the old-files
++folder.
++
++_commit_fileexists_list updated to use the new ssvc_fileexists_list
++
++
++
++INFO:log: #### 20200401195222-commitmsg #### 
++
++Updating the documentation wrt the functions and its uage
++
++
++
++INFO:log: #### 20200401170126-commitmsg #### 
++
++cat dont print newline, pass cmdline arg to do_diff
++
++Now one can pass either --LC-CA or --LC-WD or --CA-WD
++
++TODO: have to fix --CA-WD, bcas the current logic, shows
++all the content of full file, for the files missing in
++cacheDir. Note that cacheDir will only have some files
++so one has to diff for only the files in cacheDir and
++not for all files
++
++
++
++INFO:log: #### 20200401164735-commitmsg #### 
++
++Use internal cat logic from do_log
++
++
++
++
++INFO:log: #### 20200401163054-commitmsg #### 
++
++Commit only files specified (using add) after last commit
++
++_cp updated to return exit status of os cp command
++
++ssvc_cp updated to 
++
++* take the BaseSrcPath also. Bcas we will be copying between ssvc
++  directories like from workingDir (".") to cacheDir or from 
++  cacheDir to copyDir
++
++  Thus to the ssvc_... helper commands, we always provide the file
++  involved as its tracked file info. And inturn specify any of the
++  ssvc directories that logic may require to work with
++
++* return if the cp was successful or not, as a boolean
++
++* do_add updated to use this new copy logic by passing workingDir as
++  the sBaseSrcPath, bcas add copies file from workingDir to cacheDir
++
++_do_diff renamed to _do_difffile, so that the name represents its logic
++of diffing a given file, clearly.
++
++do_diff now allows its caller to explicitly specify the list of files
++to work with.
++
++* previously it was hardcoded to cross check all tracked files. 
++
++* However given that now we have a 2-step commit flow consisting of
++
++  * first adding files that need to be commited to the cacheDir over
++    multiple calls to add command.
++
++  * And inturn followed by calling commit command to commit only the
++    files in the cacheDir.
++
++* we may either want to go through the full tracked files list or only
++  a subset which corresponds to those added to the cacheDir after last
++  commit. And this helps achieve that.
++
++* if the file list is not explicitly specified, then the logic reverts
++  to the old behavior of going throu all the tracked files.
++
++_commit_filediff updated to take the new file as the one in cacheDir and
++not the one in workingDir.
++
++_commit_filecopy updated to copy file from cacheDir to copyDir, using the
++new ssvc_cp logic. Inturn if the copy is successful, then remove the file
++from the cacheDir.
++
++_commit_fileexists_list given a list of files (usually the tracked files), 
++it checks if any of them has been added to the cacheDir, and inturn return 
++the list of files, which exist in the cacheDir, for the given input file
++list.
++
++do_commit updated to
++
++* use the new _commit_fileexists_list to get the list of files in cacheDir
++  to work with, instead of the previous simpler map+filter logic.
++
++  This was required bcas, the previous logic would have returned the list
++  of files with the cacheDir path prefixed with them. While the remaining
++  logic require the list of files in cacheDir, but without the cacheDir
++  path prefix.
++
++* use the new do_diff, by passing the list of files found in cacheDir to it
++  as well as asking it to compare between the copyDir and the cacheDir.
++
++* similarly only commit the diff of the tracked files in cacheDir to diffDir
++  as well as inturn copy to the copyDir from cacheDir.
++
++
++
++
++INFO:log: #### 20200401155030-commitmsg #### 
++
++Fix some oversights in do_diff, get list of files in cacheDir
++
++
++
++INFO:log: #### 20200401143133-commitmsg #### 
++
++New add-commit logic, do_diff and its helper updated
++
++
++However callers of do_diff have not yet been updated.
++
++
++INFO:log: #### 20200401124158-commitmsg #### 
++
++New Add logic, so as to commit only specified files - P1
++
++Added a cacheDir, which will contain files which are added
++for the next commit.
++
++Init command updated to create the cacheDir.
++
++ssvccopy_mkdir and ssvccopy_cp changed to ssvc_mkdir & ssvc_cp.
++Previously they always assumed copyDir as the destination. Now
++they take a argument which tells which is the destination.
++
++do_add updated to only copy specified files into cacheDir, in
++addition to adding it to the tracked file list. It will no
++longer try to commit the file. Instead one is required to
++explicitly call commit command to achieve the previous behavior.
++
++This also means that one is no longer required to generate a
++commit message for the ADD operation.
++
++TODO: By modifying do_commit to work with either files in 
++working directory or cache directory, one can either commit
++all changed files or only those changed files, which the user
++has asked to be commited by using add after the last commit.
++
++Thus one can control what and tracked files are commited during
++any given commit operation.
++
++TODO: May need to modify ssvc_cp further to take a BaseSrcPath
++also in addition to the current BaseDestPath. Also may have to
++add a recursive ssvc_removedir logic.
++
++
++INFO:log: #### 20200401095900-commitmsg #### 
++
++Implement editcmsg, update its documentation
++
++
++
++INFO:log: #### 20200401094035-commitmsg #### 
++
++Some thoughts for future
++
++
++INFO:log: #### 20200401093043-commitmsg #### 
++
++Commented about args to commands, starting of editcmsg
++
++In the process of adding a new editcmsg command. This will allow
++one to edit a specified commit message.
++
++Have added comments to commands which take arguments. Some of
++them require arguments to follow compulsarily. Others support
++optional arguments.
++
++
++
++INFO:log: #### 20200331213433-commitmsg #### 
++
++Add cur second to timestamp
++
++Sometimes if one does say init and add or add and commit back to
++back within a minute, then both the commit messages will have the
++same timestamp. And this will lead to sorting of log problematic.
++
++So now even second is also added as part of timestamp. So from a
++normal human perspective such issue can no longer occur.
++
++NOTE: In future if computers are lot lot more faster and or commit
++things to a ram based disk, then maybe if commands are run from
++a script, there could be a issue. A remote possibility which is
++currently ignored.
++
++
++
++INFO:log: #### 202003311547-commitmsg #### 
++
++Pass TS to _commit_op, instead of it generating
++
++In do_add, I not only require to create a OP commitmsg but also
++create the full diff file for the new file being added.
++
++Previously _commit_op was creating its own timestamp, but that
++can lead to wrong time stamps for two related timestamped files
++in the diffDir (i.e the add-commitmsg and diff-of-new_file).
++
++So now _commit_op no longer creates its own ts, instead one
++requires to the pass the same. So now both do_add and do_init
++generate the timestamp initially and then pass it to all required
++helper functions.
++
++
++
++INFO:log: #### 202003311503-commitmsg #### 
++
++unidirectional-new-file, generate diff file while adding file
++
++Pass --unidirectional-new-file to diff commands used as part of
++do_diff and do_commit. This ensures that if we dont have a 
++given file in copyDir, then instead of giving a error, it will
++generate a diff file corresponding to the full file content.
++
++This all ensures that the same logic that was used in do_commit,
++can be used from do_add also.
++
++Now do_add also creates a diff file for the new file which was
++added using above logic.
++
++Also fixed a mistake in the documentation of _commit_filediff
++
++
++INFO:log: #### 202003311219-commitmsg #### 
++
++peek_ingroup, document remaining functions
++
++Renamed peek_nextarg to peek_ingroup to reflect the true
++functionality of the logic.
++
++Added documentation for the remaining functions.
++
++
++
++
++INFO:log: #### 202003311004-commitmsg #### 
++
++Now hkvc-run install also calls check_install before and after the install
++
++
++
++
++INFO:log: #### 202003310958-commitmsg #### 
++
++Commitmsg for Init, Document the functions.
++
++Now init command also generates a commitmsg file in diffDirs
++to help users track the event (which is the originator of the
++that ssvc repository). To help with same the helper _commit_op
++function moved to begining.
++
++Also adding documentation for all the functions. Have done for
++most, few remaining.
++
++
++
++INFO:log: #### 202003291827-commitmsg #### 
++
++Moved a specific file diff logic into _do_diff
++
++do_diff inturn now calls _do_diff.
++
++TODO:
++
++The reason why this logic has been restructured is so that
++later I can diff a specific file rather than all files
++which are being tracked.
++
++
++
++INFO:log: #### 202003291804-OP_ADD-commitmsg #### 
++
++Added file [CHANGELOG]
++
++
+ INFO:log: #### 202003291803-OP_ADD-commitmsg #### 
+ 
+ Added file [hkvc-run.sh]

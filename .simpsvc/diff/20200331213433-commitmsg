@@ -1,0 +1,14 @@
+Add cur second to timestamp
+
+Sometimes if one does say init and add or add and commit back to
+back within a minute, then both the commit messages will have the
+same timestamp. And this will lead to sorting of log problematic.
+
+So now even second is also added as part of timestamp. So from a
+normal human perspective such issue can no longer occur.
+
+NOTE: In future if computers are lot lot more faster and or commit
+things to a ram based disk, then maybe if commands are run from
+a script, there could be a issue. A remote possibility which is
+currently ignored.
+

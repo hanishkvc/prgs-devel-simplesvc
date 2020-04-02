@@ -1,0 +1,12 @@
+Added initial logic for commit
+
+* Added logic to add a commit message
+
+  if the commit message is less than 5 chars, avoid commit
+
+  Copy the commit message into the diffDir
+
+* create the diff file for each file in diffDir
+
+All contents of the diffDir have timestamp prefixed to it
+

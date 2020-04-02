@@ -1,0 +1,20 @@
+Optimise commit logic
+
+the _commit_filediff helper logic updated to
+
+* remove the diff file corresponding to tracked files
+  if they are empty (i.e no difference between working
+  directory version and the last commited version in
+  the copy directory).
+
+  This helps avoid cluttering the diff folder with empty
+  diff files for unchanged files (wrt each given commit)
+
+* return true if the file is changed between copy and
+  working directories.
+
+avoid copying unchanged file again into copy directory
+from the working directory
+
+Added explanation for the _commit_filediff
+

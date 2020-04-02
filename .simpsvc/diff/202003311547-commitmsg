@@ -1,0 +1,14 @@
+Pass TS to _commit_op, instead of it generating
+
+In do_add, I not only require to create a OP commitmsg but also
+create the full diff file for the new file being added.
+
+Previously _commit_op was creating its own timestamp, but that
+can lead to wrong time stamps for two related timestamped files
+in the diffDir (i.e the add-commitmsg and diff-of-new_file).
+
+So now _commit_op no longer creates its own ts, instead one
+requires to the pass the same. So now both do_add and do_init
+generate the timestamp initially and then pass it to all required
+helper functions.
+

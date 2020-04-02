@@ -1,0 +1,12 @@
+Make diff interactive and informative
+
+Now one can make diff optionally interactive. i.e after each
+file has been diffed, it will ask user to press any key to
+continue.
+
+Also now the do_diff logic will return info as to whether any
+of the file diff'd had any difference or not.
+
+NOTE: Later It will be used to decide, if one should go ahead
+with the commit logic or not.
+

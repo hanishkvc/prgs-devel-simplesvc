@@ -1,0 +1,40 @@
+--- .simpsvc/copy/README	2020-03-29 14:19:26.520603820 +0530
++++ README	2020-04-01 09:39:41.144021948 +0530
+@@ -1,5 +1,10 @@
+-# hkvc simple version control 
+-v20200329IST0112, HanishKVC
++======================================
++hkvc simple source version control 
++======================================
++v20200401IST0938, HanishKVC
++
++Intro
++=======
+ 
+ Allows one to track changes to a set of files in a simple way,
+ which doesnt require any special filesystem support, other than
+@@ -21,3 +26,24 @@
+ commit
+ log
+ 
++editcmsg
++
++
++For Future
++============
++
++TODO1: Commit only select files
++Make add copy to a temp cache dir within ssvc repository.
++Inturn commit only commits changes which are there between
++the temp cache dir and previously commited files.
++
++This also ensures that the same logic can apply irrespective
++of whether one is adding a file for the 1st time, or adding
++it later after some changes have been made. Currently add
++does commit related operations, which can be avoided with
++this above logic.
++
++This also gives more freedom to user to decide when to commit
++what, rather than forcing everything to be commited at the
++same time.
++

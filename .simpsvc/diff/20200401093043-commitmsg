@@ -1,0 +1,9 @@
+Commented about args to commands, starting of editcmsg
+
+In the process of adding a new editcmsg command. This will allow
+one to edit a specified commit message.
+
+Have added comments to commands which take arguments. Some of
+them require arguments to follow compulsarily. Others support
+optional arguments.
+

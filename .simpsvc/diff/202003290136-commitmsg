@@ -1,0 +1,9 @@
+Renamed the core identity from cvs to svc
+
+So the hidden directory corresponding to the repository
+is now named .simpsvc instead of .simpcvs.
+
+NOTE: For all version control repositories which use
+this program, rename the hidden repository folder manually
+to make it work with this new version of the program.
+

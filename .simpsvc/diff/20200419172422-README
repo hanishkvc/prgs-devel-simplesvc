@@ -1,0 +1,40 @@
+--- .simpsvc/copy/README	2020-04-01 15:10:50.000000000 +0530
++++ .simpsvc/cache/README	2020-04-02 04:33:44.000000000 +0530
+@@ -32,7 +32,31 @@
+ For Future
+ ============
+ 
+-TODO1: Commit only select files
++TODOs
++----------
++
++TODO01: do_diff fallback to checking working dir file against
++copyDir version of the file, in case cacheDir doesnt have the
++corresponding file (but has other files in it, due to which 
++autofall back to copyDir at the global level wont trigger).
++
++TODO02: Implement commit -a, that is bring back the old
++behavior for the cases, where one wants to commit all the
++files which have changed in the working dir, without having
++to first go thro the staging area in cacheDir, by calling
++add for each file individually. Useful if too many files
++have been changed.
++
++TODO03: diff a specific file
++
++TODO4: Remove the press key prompt when auto falling back
++to copyDir based diff check, when cacheDir is empty.
++
++
++Done
++--------
++
++Done01: Commit only select files
+ Make add copy to a temp cache dir within ssvc repository.
+ Inturn commit only commits changes which are there between
+ the temp cache dir and previously commited files.
+@@ -46,4 +70,3 @@
+ This also gives more freedom to user to decide when to commit
+ what, rather than forcing everything to be commited at the
+ same time.
+-

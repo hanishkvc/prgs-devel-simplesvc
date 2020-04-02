@@ -1,0 +1,9 @@
+Fix a bug with commit optimisation logic last commit
+
+Was checking specifically for 1, instead of having a
+generic not 0 check, wrt the diff command. Because of
+this the logic was not copying the file into copyDir.
+
+Have fixed the logic now. Also added a debug print 
+to check, if things are fine still.
+

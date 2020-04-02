@@ -1,0 +1,14 @@
+unidirectional-new-file, generate diff file while adding file
+
+Pass --unidirectional-new-file to diff commands used as part of
+do_diff and do_commit. This ensures that if we dont have a 
+given file in copyDir, then instead of giving a error, it will
+generate a diff file corresponding to the full file content.
+
+This all ensures that the same logic that was used in do_commit,
+can be used from do_add also.
+
+Now do_add also creates a diff file for the new file which was
+added using above logic.
+
+Also fixed a mistake in the documentation of _commit_filediff

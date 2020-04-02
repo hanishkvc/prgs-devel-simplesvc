@@ -1,0 +1,19 @@
+Commit updates file copy, copy helpers updated
+
+Now when one does a commit, the files are copied
+into the simple cvs's copyDir.
+
+TO help with above, the copy related logics have
+been refactored.
+
+* previous sgcopy_cp has been renamed to _cp
+
+* New sgcopy_cp takes the simpcvs me context,
+  as well as the file to copy. It no longer
+  requires the destination path to be specified.
+
+  The logic will automatically determines the
+  destination path in copyDir, from the given
+  file to copy.
+
+

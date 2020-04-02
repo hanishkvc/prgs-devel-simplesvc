@@ -1,0 +1,71 @@
+Commit only files specified (using add) after last commit
+
+_cp updated to return exit status of os cp command
+
+ssvc_cp updated to 
+
+* take the BaseSrcPath also. Bcas we will be copying between ssvc
+  directories like from workingDir (".") to cacheDir or from 
+  cacheDir to copyDir
+
+  Thus to the ssvc_... helper commands, we always provide the file
+  involved as its tracked file info. And inturn specify any of the
+  ssvc directories that logic may require to work with
+
+* return if the cp was successful or not, as a boolean
+
+* do_add updated to use this new copy logic by passing workingDir as
+  the sBaseSrcPath, bcas add copies file from workingDir to cacheDir
+
+_do_diff renamed to _do_difffile, so that the name represents its logic
+of diffing a given file, clearly.
+
+do_diff now allows its caller to explicitly specify the list of files
+to work with.
+
+* previously it was hardcoded to cross check all tracked files. 
+
+* However given that now we have a 2-step commit flow consisting of
+
+  * first adding files that need to be commited to the cacheDir over
+    multiple calls to add command.
+
+  * And inturn followed by calling commit command to commit only the
+    files in the cacheDir.
+
+* we may either want to go through the full tracked files list or only
+  a subset which corresponds to those added to the cacheDir after last
+  commit. And this helps achieve that.
+
+* if the file list is not explicitly specified, then the logic reverts
+  to the old behavior of going throu all the tracked files.
+
+_commit_filediff updated to take the new file as the one in cacheDir and
+not the one in workingDir.
+
+_commit_filecopy updated to copy file from cacheDir to copyDir, using the
+new ssvc_cp logic. Inturn if the copy is successful, then remove the file
+from the cacheDir.
+
+_commit_fileexists_list given a list of files (usually the tracked files), 
+it checks if any of them has been added to the cacheDir, and inturn return 
+the list of files, which exist in the cacheDir, for the given input file
+list.
+
+do_commit updated to
+
+* use the new _commit_fileexists_list to get the list of files in cacheDir
+  to work with, instead of the previous simpler map+filter logic.
+
+  This was required bcas, the previous logic would have returned the list
+  of files with the cacheDir path prefixed with them. While the remaining
+  logic require the list of files in cacheDir, but without the cacheDir
+  path prefix.
+
+* use the new do_diff, by passing the list of files found in cacheDir to it
+  as well as asking it to compare between the copyDir and the cacheDir.
+
+* similarly only commit the diff of the tracked files in cacheDir to diffDir
+  as well as inturn copy to the copyDir from cacheDir.
+
+
