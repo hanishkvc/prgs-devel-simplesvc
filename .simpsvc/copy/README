@@ -8,7 +8,9 @@ Intro
 
 Allows one to track changes to a set of files in a simple way,
 which doesnt require any special filesystem support, other than
-hidden directory for now.
+hidden directory for now (even this requirement can be avoided
+by updating the dictionary of paths at the beginning of the
+code).
 
 Useful for example, when storing or managing files on a plan 9
 filesystem as used by chrome os (and inturn chromebooks) for the

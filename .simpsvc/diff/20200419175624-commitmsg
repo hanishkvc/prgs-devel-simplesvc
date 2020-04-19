@@ -1,0 +1,6 @@
+Updated readme file wrt hidden folder 
+
+Technically there is no need for hidden folder support
+also. The code can be changed easily to work without
+such support on the underlying filesystem.
+
